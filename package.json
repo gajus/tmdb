@@ -68,7 +68,7 @@
     "build": "babel ./src --out-dir ./dist --copy-files --source-maps",
     "generate-types": "babel-node ./src/bin/generate-types.js",
     "lint": "eslint ./src ./test && flow",
-    "test": "ava --serial --verbose"
+    "test": "NODE_ENV=test ava --serial --verbose"
   },
   "version": "2.0.1"
 }
