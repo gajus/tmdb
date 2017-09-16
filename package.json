@@ -45,7 +45,7 @@
   "keywords": [
     "tmdb"
   ],
-  "main": "./dist/Tmdb.js",
+  "main": "./dist/index.js",
   "name": "tmdb",
   "nyc": {
     "include": [
