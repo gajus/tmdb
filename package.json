@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "ajv": "^5.2.2",
+    "bluefeather": "^2.7.0",
     "debug": "^3.0.1",
     "deep-map-keys": "^1.2.0",
     "es6-error": "^4.0.2",

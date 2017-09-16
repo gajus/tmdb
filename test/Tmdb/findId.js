@@ -14,13 +14,19 @@ test('finds TMDb movie record ID using IMDb ID', async (t) => {
 
   const scope = nock('https://api.themoviedb.org')
     .get('/3/find/tt1?api_key=foo&external_source=imdb')
-    .reply(200, {
-      movie_results: [
-        {
-          id: 1
-        }
-      ]
-    });
+    .reply(
+      200,
+      {
+        movie_results: [
+          {
+            id: 1
+          }
+        ]
+      },
+      {
+        'x-ratelimit-remaining': 1
+      }
+    );
 
   const movieId = await tmdb.findId('movie', 'imdb', 'tt1');
 
@@ -35,9 +41,15 @@ test('throws NotFoundError if resource cannot be found', async (t) => {
 
   const scope = nock('https://api.themoviedb.org')
     .get('/3/find/tt1?api_key=foo&external_source=imdb')
-    .reply(200, {
-      movie_results: []
-    });
+    .reply(
+      200,
+      {
+        movie_results: []
+      },
+      {
+        'x-ratelimit-remaining': 1
+      }
+    );
 
   const error = await t.throws(tmdb.findId('movie', 'imdb', 'tt1'));
 
@@ -52,16 +64,22 @@ test('throws UnexpectedResponseError if multiple results are returned', async (t
 
   const scope = nock('https://api.themoviedb.org')
     .get('/3/find/tt1?api_key=foo&external_source=imdb')
-    .reply(200, {
-      movie_results: [
-        {
-          id: 1
-        },
-        {
-          id: 2
-        }
-      ]
-    });
+    .reply(
+      200,
+      {
+        movie_results: [
+          {
+            id: 1
+          },
+          {
+            id: 2
+          }
+        ]
+      },
+      {
+        'x-ratelimit-remaining': 1
+      }
+    );
 
   const error = await t.throws(tmdb.findId('movie', 'imdb', 'tt1'));
 

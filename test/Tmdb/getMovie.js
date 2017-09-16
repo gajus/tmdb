@@ -10,10 +10,16 @@ test('retrieves movie resource', async (t) => {
 
   const scope = nock('https://api.themoviedb.org')
     .get('/3/movie/1?api_key=foo&language=en')
-    .reply(200, {
-      id: 1,
-      imdb_id: 'tt1'
-    });
+    .reply(
+      200,
+      {
+        id: 1,
+        imdb_id: 'tt1'
+      },
+      {
+        'x-ratelimit-remaining': 1
+      }
+    );
 
   const movie = await tmdb.getMovie(1);
 

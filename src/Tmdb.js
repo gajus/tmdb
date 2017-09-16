@@ -4,6 +4,9 @@ import xfetch from 'xfetch';
 import qs from 'qs';
 import deepMapKeys from 'deep-map-keys';
 import {
+  delay
+} from 'bluefeather';
+import {
   camelCase
 } from 'lodash';
 import {
@@ -25,20 +28,6 @@ type QueryType = {
   [key: string]: string | number
 };
 
-const isResponseValid = async (intermediateResponse) => {
-  if (!String(intermediateResponse.status).startsWith('2') && !String(intermediateResponse.status).startsWith('3') && intermediateResponse.status !== 400) {
-    if (intermediateResponse.status === 404) {
-      throw new NotFoundError();
-    }
-
-    const response = await intermediateResponse.json();
-
-    throw new RemoteError(response.status_message, response.status_code);
-  }
-
-  return true;
-};
-
 class Tmdb {
   apiKey: string;
   language: string;
@@ -50,18 +39,57 @@ class Tmdb {
 
   // eslint-disable-next-line flowtype/no-weak-types
   async get (resource: string, parameters: QueryType = {}): Object {
-    const requestQuery = qs.stringify({
-      // eslint-disable-next-line id-match
-      api_key: this.apiKey,
-      ...parameters
-    });
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      const requestQuery = qs.stringify({
+        // eslint-disable-next-line id-match
+        api_key: this.apiKey,
+        ...parameters
+      });
 
-    const body = await xfetch('https://api.themoviedb.org/3/' + resource + '?' + requestQuery, {
-      isResponseValid,
-      responseType: 'json'
-    });
+      const response = await xfetch('https://api.themoviedb.org/3/' + resource + '?' + requestQuery, {
+        isResponseValid: () => {
+          return true;
+        },
+        responseType: 'full'
+      });
 
-    return deepMapKeys(body, camelCase);
+      if (!response.headers.has('x-ratelimit-remaining')) {
+        throw new UnexpectedResponseError();
+      }
+
+      if (!String(response.status).startsWith('2')) {
+        const rateLimitRemaining = Number(response.headers.get('x-ratelimit-remaining'));
+
+        if (!rateLimitRemaining) {
+          const currentTime = Math.round(new Date().getTime() / 1000);
+          const rateLimitReset = Number(response.headers.get('x-ratelimit-reset'));
+
+          // The minimum 30 seconds cooldown ensures that in case 'x-ratelimit-reset'
+          // time is wrong, we don't bombard the TMDb server with requests.
+          const cooldownTime = Math.max(rateLimitReset - currentTime, 30);
+
+          debug('reached rate limit; waiting %d seconds', cooldownTime);
+
+          await delay(cooldownTime * 1000);
+
+          // eslint-disable-next-line no-continue
+          continue;
+        }
+
+        if (response.status === 404) {
+          throw new NotFoundError();
+        }
+
+        const errorBody = await response.json();
+
+        throw new RemoteError(errorBody.status_message, errorBody.status_code);
+      }
+
+      const body = await response.json();
+
+      return deepMapKeys(body, camelCase);
+    }
   }
 
   async findId (resourceType: 'movie', externalSource: 'imdb', externalId: string): Promise<number> {
