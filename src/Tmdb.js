@@ -102,7 +102,7 @@ class Tmdb {
     }
 
     const result = await this.get('find/' + externalId, {
-      external_source: externalSource
+      external_source: externalSource + '_id'
     });
 
     if (result.movieResults.length === 0) {

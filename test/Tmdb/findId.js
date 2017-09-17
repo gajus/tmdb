@@ -13,7 +13,7 @@ test('finds TMDb movie record ID using IMDb ID', async (t) => {
   const tmdb = new Tmdb(apiKey);
 
   const scope = nock('https://api.themoviedb.org')
-    .get('/3/find/tt1?api_key=foo&external_source=imdb')
+    .get('/3/find/tt1?api_key=foo&external_source=imdb_id')
     .reply(
       200,
       {
@@ -40,7 +40,7 @@ test('throws NotFoundError if resource cannot be found', async (t) => {
   const tmdb = new Tmdb(apiKey);
 
   const scope = nock('https://api.themoviedb.org')
-    .get('/3/find/tt1?api_key=foo&external_source=imdb')
+    .get('/3/find/tt1?api_key=foo&external_source=imdb_id')
     .reply(
       200,
       {
@@ -63,7 +63,7 @@ test('throws UnexpectedResponseError if multiple results are returned', async (t
   const tmdb = new Tmdb(apiKey);
 
   const scope = nock('https://api.themoviedb.org')
-    .get('/3/find/tt1?api_key=foo&external_source=imdb')
+    .get('/3/find/tt1?api_key=foo&external_source=imdb_id')
     .reply(
       200,
       {
