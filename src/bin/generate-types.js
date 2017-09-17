@@ -29,7 +29,7 @@ const createFlowObject = (resource: Object) => {
     const property = resource[propertyName];
 
     // eslint-disable-next-line no-use-before-define
-    types.push(camelCase(propertyName) + ': ' + getFlowType(property));
+    types.push('+' + camelCase(propertyName) + ': ' + getFlowType(property));
   }
 
   return '{|\n' + types.join(',\n') + '\n|};';
