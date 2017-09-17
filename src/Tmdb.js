@@ -19,6 +19,8 @@ import {
   Unimplemented
 } from './errors';
 import type {
+  MovieCastCreditType,
+  MovieCrewCreditType,
   MovieType
 } from './types';
 
@@ -124,6 +126,22 @@ class Tmdb {
     });
 
     return movie;
+  }
+
+  async getMovieCastCredits (movieId: number): Promise<$ReadOnlyArray<MovieCastCreditType>> {
+    const movieCredits = await this.get('movie/' + movieId + '/credits', {
+      language: this.language
+    });
+
+    return movieCredits.cast;
+  }
+
+  async getMovieCrewCredits (movieId: number): Promise<$ReadOnlyArray<MovieCrewCreditType>> {
+    const movieCredits = await this.get('movie/' + movieId + '/credits', {
+      language: this.language
+    });
+
+    return movieCredits.crew;
   }
 }
 

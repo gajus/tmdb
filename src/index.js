@@ -7,5 +7,8 @@ export {
   TmdbError
 } from './errors';
 export type {
+  ImagePathType,
+  MovieCastCreditType,
+  MovieCrewCreditType,
   MovieType
 } from './types';
