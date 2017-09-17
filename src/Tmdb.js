@@ -111,7 +111,6 @@ class Tmdb {
   }
 
   async getMovie (movieId: number): Promise<MovieType> {
-    debug('retrieving movie by TMDb ID %d', movieId);
 
     const movie = await this.get('movie/' + movieId, {
       language: this.language
