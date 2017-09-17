@@ -94,6 +94,32 @@ class Tmdb {
     }
   }
 
+  async getMovieCastCredits (movieId: number): Promise<$ReadOnlyArray<MovieCastCreditType>> {
+    const movieCredits = await this.get('movie/' + movieId + '/credits', {
+      language: this.language
+    });
+
+    return movieCredits.cast;
+  }
+
+  async getMovieCrewCredits (movieId: number): Promise<$ReadOnlyArray<MovieCrewCreditType>> {
+    const movieCredits = await this.get('movie/' + movieId + '/credits', {
+      language: this.language
+    });
+
+    return movieCredits.crew;
+  }
+
+  async getMovie (movieId: number): Promise<MovieType> {
+    debug('retrieving movie by TMDb ID %d', movieId);
+
+    const movie = await this.get('movie/' + movieId, {
+      language: this.language
+    });
+
+    return movie;
+  }
+
   async findId (resourceType: 'movie', externalSource: 'imdb', externalId: string): Promise<number> {
     if (resourceType !== 'movie') {
       throw new Unimplemented();
@@ -116,32 +142,6 @@ class Tmdb {
     }
 
     return Number(result.movieResults[0].id);
-  }
-
-  async getMovie (movieId: number): Promise<MovieType> {
-    debug('retrieving movie by TMDb ID %d', movieId);
-
-    const movie = await this.get('movie/' + movieId, {
-      language: this.language
-    });
-
-    return movie;
-  }
-
-  async getMovieCastCredits (movieId: number): Promise<$ReadOnlyArray<MovieCastCreditType>> {
-    const movieCredits = await this.get('movie/' + movieId + '/credits', {
-      language: this.language
-    });
-
-    return movieCredits.cast;
-  }
-
-  async getMovieCrewCredits (movieId: number): Promise<$ReadOnlyArray<MovieCrewCreditType>> {
-    const movieCredits = await this.get('movie/' + movieId + '/credits', {
-      language: this.language
-    });
-
-    return movieCredits.crew;
   }
 }
 
