@@ -10,12 +10,39 @@ import {
 } from 'lodash';
 
 const typeMap = {
+  ImagePathType: (data) => {
+    return data.definitions['image-path'].type;
+  },
+  MovieCastCreditType: (data) => {
+    return data.paths['/movie/{movie_id}/credits'].get.responses['200'].schema.properties.cast.items.properties;
+  },
+  MovieCrewCreditType: (data) => {
+    return data.paths['/movie/{movie_id}/credits'].get.responses['200'].schema.properties.crew.items.properties;
+  },
   MovieType: (data) => {
     return data.paths['/movie/{movie_id}'].get.responses['200'].schema.properties;
   }
 };
 
+const definitionMap = {
+  '#/definitions/image-path': 'ImagePathType'
+};
+
 const typeNames = Object.keys(typeMap);
+
+const createFlowType = (typeDefinition: mixed) => {
+  if (Array.isArray(typeDefinition)) {
+    return typeDefinition.map(createFlowType).join(' | ');
+  } else if (typeof typeDefinition === 'string') {
+    // eslint-disable-next-line no-use-before-define
+    return getPrimitiveFlowType(typeDefinition);
+  } else if (typeof typeDefinition === 'object' && typeDefinition !== null) {
+    // eslint-disable-next-line no-use-before-define
+    return createFlowObject(typeDefinition);
+  }
+
+  throw new Error('Unexpected type definition.');
+};
 
 // eslint-disable-next-line flowtype/no-weak-types
 const createFlowObject = (resource: Object) => {
@@ -32,7 +59,7 @@ const createFlowObject = (resource: Object) => {
     types.push('+' + camelCase(propertyName) + ': ' + getFlowType(property));
   }
 
-  return '{|\n' + types.join(',\n') + '\n|};';
+  return '{|\n' + types.join(',\n') + '\n|}';
 };
 
 const getPrimitiveFlowType = (typeName: string) => {
@@ -52,9 +79,17 @@ const getPrimitiveFlowType = (typeName: string) => {
 };
 
 const getFlowType = (property: *) => {
-  // @todo Support $ref
   if (property.$ref) {
-    return 'any';
+    const mappedType = definitionMap[property.$ref];
+
+    if (!mappedType) {
+      // eslint-disable-next-line no-console
+      console.log('property.$ref', property.$ref);
+
+      throw new Error('Unmapped definition.');
+    }
+
+    return mappedType;
   }
 
   if (Array.isArray(property.type)) {
@@ -84,14 +119,14 @@ const run = async () => {
       throw new Error('Unexpected state.');
     }
 
-    const properties = resourceResolver(oas);
+    const typeDefinition = resourceResolver(oas);
 
-    if (!properties) {
+    if (!typeDefinition) {
       throw new Error('Unexpected state.');
     }
 
     // eslint-disable-next-line no-console
-    console.log('type ' + typeName + ' = ' + createFlowObject(properties));
+    console.log('export type ' + typeName + ' = ' + createFlowType(typeDefinition) + ';');
   }
 };
 
