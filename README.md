@@ -8,6 +8,11 @@
 
 [The Movie Database](https://www.themoviedb.org/) (TMDb) SDK.
 
+## Features
+
+* Automatic rate-throttling
+* Strict types
+
 ## Usage
 
 ```js
