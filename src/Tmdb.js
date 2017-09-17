@@ -21,7 +21,8 @@ import {
 import type {
   MovieCastCreditType,
   MovieCrewCreditType,
-  MovieType
+  MovieType,
+  PersonType
 } from './types';
 
 const debug = createDebug('Tmdb');
@@ -111,12 +112,19 @@ class Tmdb {
   }
 
   async getMovie (movieId: number): Promise<MovieType> {
-
     const movie = await this.get('movie/' + movieId, {
       language: this.language
     });
 
     return movie;
+  }
+
+  async getPerson (personId: number): Promise<PersonType> {
+    const person = await this.get('person/' + personId, {
+      language: this.language
+    });
+
+    return person;
   }
 
   async findId (resourceType: 'movie', externalSource: 'imdb', externalId: string): Promise<number> {

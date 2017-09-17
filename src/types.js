@@ -69,3 +69,19 @@ export type MovieType = {|
   +voteAverage: number,
   +voteCount: number
 |};
+
+export type PersonType = {|
+  +adult: boolean,
+  +alsoKnownAs: $ReadOnlyArray<Object>,
+  +biography: string,
+  +birthday: string | null,
+  +deathday: string | null,
+  +gender: number,
+  +homepage: string | null,
+  +id: number,
+  +imdbId: string,
+  +name: string,
+  +placeOfBirth: string | null,
+  +popularity: number,
+  +profilePath: ImagePathType
+|};
