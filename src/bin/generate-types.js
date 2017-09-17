@@ -56,7 +56,7 @@ const createFlowObject = (resource: Object) => {
     const property = resource[propertyName];
 
     // eslint-disable-next-line no-use-before-define
-    types.push('+' + camelCase(propertyName) + ': ' + getFlowType(property));
+    types.push('+' + camelCase(propertyName) + ': ' + getPropertyFlowType(property));
   }
 
   return '{|\n' + types.join(',\n') + '\n|}';
@@ -78,7 +78,8 @@ const getPrimitiveFlowType = (typeName: string) => {
   throw new Error('Unexpected input type.');
 };
 
-const getFlowType = (property: *) => {
+// eslint-disable-next-line flowtype/no-weak-types
+const getPropertyFlowType = (property: Object) => {
   if (property.$ref) {
     const mappedType = definitionMap[property.$ref];
 
@@ -97,7 +98,7 @@ const getFlowType = (property: *) => {
   }
 
   if (property.type === 'array') {
-    return '$ReadOnlyArray<' + getFlowType(property.items) + '>';
+    return '$ReadOnlyArray<' + getPropertyFlowType(property.items) + '>';
   }
 
   if (property.type === 'object' && property.properties) {
