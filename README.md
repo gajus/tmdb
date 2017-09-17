@@ -29,6 +29,14 @@ const tmdb = new Tmdb(apiKey);
 
 ```
 
+### API
+
+Refer to the [source code](./src/Tmdb.js) and the [type definitions](./src/types.js).
+
+> Note: Only a subset of the API is implemented. I will be adding new methods as needed.
+> If you need a method added, raise a PR. Alternatively, you can use the low-level `get`
+> method to construct any API calls.
+
 ### Handling errors
 
 Methods that are expected to return a specific resource will throw `NotFoundError` if the resource is not found.
