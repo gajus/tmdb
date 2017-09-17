@@ -10,7 +10,9 @@ import {
 } from 'lodash';
 
 const typeMap = {
-  MovieType: '/movie/{movie_id}'
+  MovieType: (data) => {
+    return data.paths['/movie/{movie_id}'].get.responses['200'].schema.properties;
+  }
 };
 
 const typeNames = Object.keys(typeMap);
@@ -76,19 +78,17 @@ const run = async () => {
   });
 
   for (const typeName of typeNames) {
-    const resourcePath = typeMap[typeName];
+    const resourceResolver = typeMap[typeName];
 
-    if (!resourcePath) {
+    if (!resourceResolver) {
       throw new Error('Unexpected state.');
     }
 
-    const typeSpecification = oas.paths[resourcePath];
+    const properties = resourceResolver(oas);
 
-    if (!typeSpecification) {
+    if (!properties) {
       throw new Error('Unexpected state.');
     }
-
-    const properties = typeSpecification.get.responses['200'].schema.properties;
 
     // eslint-disable-next-line no-console
     console.log('type ' + typeName + ' = ' + createFlowObject(properties));
