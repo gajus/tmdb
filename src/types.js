@@ -70,6 +70,17 @@ export type MovieType = {|
   +voteCount: number
 |};
 
+export type MovieVideoType = {|
+  +id: string,
+  +iso31661: string,
+  +iso6391: string,
+  +key: string,
+  +name: string,
+  +site: string,
+  +size: number,
+  +type: string
+|};
+
 export type PersonType = {|
   +adult: boolean,
   +alsoKnownAs: $ReadOnlyArray<Object>,

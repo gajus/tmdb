@@ -10,5 +10,6 @@ export type {
   ImagePathType,
   MovieCastCreditType,
   MovieCrewCreditType,
-  MovieType
+  MovieType,
+  MovieVideoType
 } from './types';

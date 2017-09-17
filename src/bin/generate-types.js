@@ -22,6 +22,9 @@ const typeMap = {
   MovieType: (data) => {
     return data.paths['/movie/{movie_id}'].get.responses['200'].schema.properties;
   },
+  MovieVideoType: (data) => {
+    return data.paths['/movie/{movie_id}/videos'].get.responses['200'].schema.properties.results.items.properties;
+  },
   PersonType: (data) => {
     return data.paths['/person/{person_id}'].get.responses['200'].schema.properties;
   }

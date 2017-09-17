@@ -22,6 +22,7 @@ import type {
   MovieCastCreditType,
   MovieCrewCreditType,
   MovieType,
+  MovieVideoType,
   PersonType
 } from './types';
 
@@ -117,6 +118,14 @@ class Tmdb {
     });
 
     return movie;
+  }
+
+  async getMovieVideos (movieId: number): Promise<$ReadOnlyArray<MovieVideoType>> {
+    const movie = await this.get('movie/' + movieId + '/videos', {
+      language: this.language
+    });
+
+    return movie.results;
   }
 
   async getPerson (personId: number): Promise<PersonType> {
