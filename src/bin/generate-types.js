@@ -13,11 +13,17 @@ const typeMap = {
   ImagePathType: (data) => {
     return data.definitions['image-path'].type;
   },
+  MovieBackdropImageType: (data) => {
+    return data.paths['/movie/{movie_id}/images'].get.responses['200'].schema.properties.backdrops.items.properties;
+  },
   MovieCastCreditType: (data) => {
     return data.paths['/movie/{movie_id}/credits'].get.responses['200'].schema.properties.cast.items.properties;
   },
   MovieCrewCreditType: (data) => {
     return data.paths['/movie/{movie_id}/credits'].get.responses['200'].schema.properties.crew.items.properties;
+  },
+  MoviePosterImageType: (data) => {
+    return data.paths['/movie/{movie_id}/images'].get.responses['200'].schema.properties.posters.items.properties;
   },
   MovieType: (data) => {
     return data.paths['/movie/{movie_id}'].get.responses['200'].schema.properties;

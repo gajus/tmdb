@@ -9,6 +9,16 @@ export type ErrorResponseType = {|
 
 export type ImagePathType = string | null;
 
+export type MovieBackdropImageType = {|
+  +aspectRatio: number,
+  +filePath: string,
+  +height: number,
+  +iso6391: null | string,
+  +voteAverage: number,
+  +voteCount: number,
+  +width: number
+|};
+
 export type MovieCastCreditType = {|
   +castId: number,
   +character: string,
@@ -28,6 +38,16 @@ export type MovieCrewCreditType = {|
   +job: string,
   +name: string,
   +profilePath: ImagePathType
+|};
+
+export type MoviePosterImageType = {|
+  +aspectRatio: number,
+  +filePath: string,
+  +height: number,
+  +iso6391: string | null,
+  +voteAverage: number,
+  +voteCount: number,
+  +width: number
 |};
 
 export type MovieType = {|

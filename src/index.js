@@ -8,8 +8,10 @@ export {
 } from './errors';
 export type {
   ImagePathType,
+  MovieBackdropImageType,
   MovieCastCreditType,
   MovieCrewCreditType,
+  MoviePosterImageType,
   MovieType,
   MovieVideoType,
   PersonType

@@ -19,8 +19,10 @@ import {
   Unimplemented
 } from './errors';
 import type {
+  MovieBackdropImageType,
   MovieCastCreditType,
   MovieCrewCreditType,
+  MoviePosterImageType,
   MovieType,
   MovieVideoType,
   PersonType
@@ -29,7 +31,7 @@ import type {
 const debug = createDebug('Tmdb');
 
 type QueryType = {
-  [key: string]: string | number
+  [key: string]: string | number | null
 };
 
 class Tmdb {
@@ -96,6 +98,23 @@ class Tmdb {
     }
   }
 
+  async getMovie (movieId: number): Promise<MovieType> {
+    const movie = await this.get('movie/' + movieId, {
+      language: this.language
+    });
+
+    return movie;
+  }
+
+  async getMovieBackdropImages (movieId: number, includeImageLanguage: $ReadOnlyArray<string>): Promise<$ReadOnlyArray<MovieBackdropImageType>> {
+    const movie = await this.get('movie/' + movieId + '/images', {
+      include_image_language: includeImageLanguage ? includeImageLanguage.join(',') : null,
+      language: this.language
+    });
+
+    return movie.backdrops;
+  }
+
   async getMovieCastCredits (movieId: number): Promise<$ReadOnlyArray<MovieCastCreditType>> {
     const movieCredits = await this.get('movie/' + movieId + '/credits', {
       language: this.language
@@ -112,12 +131,13 @@ class Tmdb {
     return movieCredits.crew;
   }
 
-  async getMovie (movieId: number): Promise<MovieType> {
-    const movie = await this.get('movie/' + movieId, {
+  async getMoviePosterImages (movieId: number, includeImageLanguage: $ReadOnlyArray<string>): Promise<$ReadOnlyArray<MoviePosterImageType>> {
+    const movie = await this.get('movie/' + movieId + '/images', {
+      include_image_language: includeImageLanguage ? includeImageLanguage.join(',') : null,
       language: this.language
     });
 
-    return movie;
+    return movie.posters;
   }
 
   async getMovieVideos (movieId: number): Promise<$ReadOnlyArray<MovieVideoType>> {
