@@ -11,5 +11,6 @@ export type {
   MovieCastCreditType,
   MovieCrewCreditType,
   MovieType,
-  MovieVideoType
+  MovieVideoType,
+  PersonType
 } from './types';
