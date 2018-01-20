@@ -11,34 +11,34 @@
     ]
   },
   "dependencies": {
-    "ajv": "^5.2.2",
+    "ajv": "^6.0.1",
     "bluefeather": "^2.7.0",
-    "debug": "^3.0.1",
+    "debug": "^3.1.0",
     "deep-map-keys": "^1.2.0",
-    "es6-error": "^4.0.2",
+    "es6-error": "^4.1.1",
     "lodash": "^4.17.4",
     "qs": "^6.5.1",
-    "xfetch": "^3.7.0"
+    "xfetch": "^3.11.1"
   },
   "description": "TMDb SDK.",
   "devDependencies": {
-    "ava": "^0.22.0",
+    "ava": "^0.24.0",
     "babel-cli": "^6.26.0",
-    "babel-plugin-istanbul": "^4.1.4",
+    "babel-plugin-istanbul": "^4.1.5",
     "babel-plugin-transform-flow-comments": "^6.22.0",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
+    "babel-preset-env": "^1.6.1",
     "babel-register": "^6.26.0",
-    "coveralls": "^2.13.1",
-    "eslint": "^4.7.0",
-    "eslint-config-canonical": "^9.3.1",
-    "flow-bin": "^0.54.1",
+    "coveralls": "^3.0.0",
+    "eslint": "^4.16.0",
+    "eslint-config-canonical": "^9.3.2",
+    "flow-bin": "^0.63.1",
     "husky": "^0.14.3",
-    "nock": "^9.0.14",
-    "nyc": "^11.2.1",
-    "semantic-release": "^7.0.2",
-    "sinon": "^3.2.1"
+    "nock": "^9.1.6",
+    "nyc": "^11.4.1",
+    "semantic-release": "^12.2.2",
+    "sinon": "^4.1.6"
   },
   "engines": {
     "node": ">=8.0"
