@@ -156,8 +156,8 @@ class Tmdb {
     return person;
   }
 
-  async findId (resourceType: 'movie', externalSource: 'imdb', externalId: string): Promise<number> {
-    if (resourceType !== 'movie') {
+  async findId (resourceType: 'movie' | 'person', externalSource: 'imdb', externalId: string): Promise<number> {
+    if (resourceType !== 'movie' && resourceType !== 'person') {
       throw new Unimplemented();
     }
 
@@ -169,15 +169,25 @@ class Tmdb {
       external_source: externalSource + '_id'
     });
 
-    if (result.movieResults.length === 0) {
+    let results;
+
+    if (resourceType === 'movie') {
+      results = result.movieResults;
+    } else if (resourceType === 'person') {
+      results = result.personResults;
+    } else {
+      throw new Error('Unexpected state.');
+    }
+
+    if (results.length === 0) {
       throw new NotFoundError();
     }
 
-    if (result.movieResults.length > 1) {
+    if (results.length > 1) {
       throw new UnexpectedResponseError();
     }
 
-    return Number(result.movieResults[0].id);
+    return Number(results[0].id);
   }
 }
 
