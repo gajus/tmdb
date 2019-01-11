@@ -26,6 +26,7 @@ export class NotFoundError extends TmdbError {
 
 export class RemoteError extends TmdbError {
   code: number;
+
   message: string;
 
   constructor (message: string, code: number) {

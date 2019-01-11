@@ -28,14 +28,15 @@ import type {
   PersonType
 } from './types';
 
-const debug = createDebug('Tmdb');
-
 type QueryType = {
   [key: string]: string | number | null
 };
 
+const debug = createDebug('Tmdb');
+
 class Tmdb {
   apiKey: string;
+
   language: string;
 
   constructor (apiKey: string, language: string = 'en') {

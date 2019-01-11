@@ -5,6 +5,8 @@
   ],
   "root": true,
   "rules": {
+    "fp/no-class": 0,
+    "fp/no-this": 0,
     "id-match": 0
   }
 }

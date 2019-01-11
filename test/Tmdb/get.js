@@ -77,7 +77,7 @@ test('throws NotFoundError if response is 404', async (t) => {
       }
     );
 
-  const error = await t.throws(tmdb.get('bar'));
+  const error = await t.throwsAsync(tmdb.get('bar'));
 
   t.true(error instanceof NotFoundError);
   t.true(error.message === 'Resource not found.');
@@ -101,7 +101,7 @@ test('throws RemoteError if response is non-200', async (t) => {
       }
     );
 
-  const error = await t.throws(tmdb.get('bar'));
+  const error = await t.throwsAsync(tmdb.get('bar'));
 
   t.true(error instanceof RemoteError);
   t.true(error.code === 7);

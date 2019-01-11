@@ -51,7 +51,7 @@ test('throws NotFoundError if resource cannot be found', async (t) => {
       }
     );
 
-  const error = await t.throws(tmdb.findId('movie', 'imdb', 'tt1'));
+  const error = await t.throwsAsync(tmdb.findId('movie', 'imdb', 'tt1'));
 
   t.true(scope.isDone());
 
@@ -81,7 +81,7 @@ test('throws UnexpectedResponseError if multiple results are returned', async (t
       }
     );
 
-  const error = await t.throws(tmdb.findId('movie', 'imdb', 'tt1'));
+  const error = await t.throwsAsync(tmdb.findId('movie', 'imdb', 'tt1'));
 
   t.true(scope.isDone());
 

@@ -2,34 +2,35 @@
   "env": {
     "development": {
       "plugins": [
-        "transform-object-rest-spread",
-        "transform-flow-comments"
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-transform-flow-comments"
       ]
     },
     "production": {
       "plugins": [
-        "transform-object-rest-spread",
-        "transform-flow-comments"
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-transform-flow-comments"
       ]
     },
     "test": {
       "plugins": [
-        "transform-object-rest-spread",
-        "transform-flow-strip-types",
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-transform-flow-strip-types",
         "istanbul"
       ]
     }
   },
   "presets": [
     [
-      "env",
+      "@babel/preset-env",
       {
         "targets": {
           "node": 8
         },
-        "useBuiltIns": true
+        "useBuiltIns": "entry"
       }
-    ]
+    ],
+    "@babel/preset-flow"
   ],
   "retainLines": true
 }
