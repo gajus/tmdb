@@ -12,11 +12,11 @@
   "dependencies": {
     "ajv": "^6.6.2",
     "bluefeather": "^2.9.0",
-    "debug": "^4.1.1",
     "deep-map-keys": "^1.2.0",
     "es6-error": "^4.1.1",
     "lodash": "^4.17.11",
     "qs": "^6.6.0",
+    "roarr": "^2.12.1",
     "xfetch": "^3.14.3"
   },
   "description": "TMDb SDK.",

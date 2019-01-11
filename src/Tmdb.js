@@ -9,9 +9,7 @@ import {
 import {
   camelCase
 } from 'lodash';
-import {
-  createDebug
-} from './factories';
+import Logger from './Logger';
 import {
   NotFoundError,
   RemoteError,
@@ -32,7 +30,9 @@ type QueryType = {
   [key: string]: string | number | null
 };
 
-const debug = createDebug('Tmdb');
+const log = Logger.child({
+  namespace: 'Tmdb'
+});
 
 class Tmdb {
   apiKey: string;
@@ -76,7 +76,7 @@ class Tmdb {
           // time is wrong, we don't bombard the TMDb server with requests.
           const cooldownTime = Math.max(rateLimitReset - currentTime, 30);
 
-          debug('reached rate limit; waiting %d seconds', cooldownTime);
+          log.debug('reached rate limit; waiting %d seconds', cooldownTime);
 
           await delay(cooldownTime * 1000);
 

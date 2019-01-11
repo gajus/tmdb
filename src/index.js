@@ -1,6 +1,8 @@
 // @flow
 
-export {default as Tmdb} from './Tmdb';
+export {
+  default as Tmdb
+} from './Tmdb';
 export {
   NotFoundError,
   RemoteError,
