@@ -1,5 +1,6 @@
 # TMDb
 
+[![GitSpo Mentions](https://gitspo.com/badges/mentions/gajus/tmdb?style=flat-square)](https://gitspo.com/mentions/gajus/tmdb)
 [![Travis build status](http://img.shields.io/travis/gajus/tmdb/master.svg?style=flat-square)](https://travis-ci.org/gajus/tmdb)
 [![Coveralls](https://img.shields.io/coveralls/gajus/tmdb.svg?style=flat-square)](https://coveralls.io/github/gajus/tmdb)
 [![NPM version](http://img.shields.io/npm/v/tmdb.svg?style=flat-square)](https://www.npmjs.org/package/tmdb)
