@@ -24,6 +24,7 @@
     [
       "@babel/preset-env",
       {
+        "corejs": "2",
         "targets": {
           "node": 8
         },
