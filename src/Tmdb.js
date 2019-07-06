@@ -1,7 +1,6 @@
 // @flow
 
-import xfetch from 'xfetch';
-import qs from 'qs';
+import got from 'got';
 import deepMapKeys from 'deep-map-keys';
 import {
   delay
@@ -48,29 +47,26 @@ class Tmdb {
   async get (resource: string, parameters: QueryType = {}): Object {
     // eslint-disable-next-line no-constant-condition
     while (true) {
-      const requestQuery = qs.stringify({
-        // eslint-disable-next-line id-match
-        api_key: this.apiKey,
-        ...parameters
-      });
-
-      const response = await xfetch('https://api.themoviedb.org/3/' + resource + '?' + requestQuery, {
-        isResponseValid: () => {
-          return true;
+      const response = await got('https://api.themoviedb.org/3/' + resource, {
+        json: true,
+        query: {
+          // eslint-disable-next-line id-match
+          api_key: this.apiKey,
+          ...parameters
         },
-        responseType: 'full'
+        throwHttpErrors: false
       });
 
-      if (!response.headers.has('x-ratelimit-remaining')) {
+      if (!response.headers['x-ratelimit-remaining']) {
         throw new UnexpectedResponseError();
       }
 
-      if (!String(response.status).startsWith('2')) {
-        const rateLimitRemaining = Number(response.headers.get('x-ratelimit-remaining'));
+      if (!String(response.statusCode).startsWith('2')) {
+        const rateLimitRemaining = Number(response.headers['x-ratelimit-remaining']);
 
         if (!rateLimitRemaining) {
           const currentTime = Math.round(new Date().getTime() / 1000);
-          const rateLimitReset = Number(response.headers.get('x-ratelimit-reset'));
+          const rateLimitReset = Number(response.headers['x-ratelimit-reset']);
 
           // The minimum 30 seconds cooldown ensures that in case 'x-ratelimit-reset'
           // time is wrong, we don't bombard the TMDb server with requests.
@@ -84,18 +80,14 @@ class Tmdb {
           continue;
         }
 
-        if (response.status === 404) {
+        if (response.statusCode === 404) {
           throw new NotFoundError();
         }
 
-        const errorBody = await response.json();
-
-        throw new RemoteError(errorBody.status_message, errorBody.status_code);
+        throw new RemoteError(response.body.status_message, response.body.status_code);
       }
 
-      const body = await response.json();
-
-      return deepMapKeys(body, camelCase);
+      return deepMapKeys(response.body, camelCase);
     }
   }
 

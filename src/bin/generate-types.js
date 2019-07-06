@@ -4,7 +4,7 @@
  * @file A promitive script used to generate Flow type declarations using TMDb OAS output.
  */
 
-import xfetch from 'xfetch';
+import got from 'got';
 import {
   camelCase
 } from 'lodash';
@@ -42,7 +42,7 @@ const definitionMap = {
 
 const typeNames = Object.keys(typeMap);
 
-const createFlowType = (typeDefinition: mixed) => {
+const createFlowType = (typeDefinition) => {
   if (Array.isArray(typeDefinition)) {
     return typeDefinition.map(createFlowType).join(' | ');
   } else if (typeof typeDefinition === 'string') {
@@ -121,8 +121,8 @@ const getPropertyFlowType = (property: Object) => {
 };
 
 const run = async () => {
-  const oas = await xfetch('https://api.stoplight.io/v1/versions/9WaNJfGpnnQ76opqe/export/oas.json', {
-    responseType: 'json'
+  const oas = await got('https://api.stoplight.io/v1/versions/9WaNJfGpnnQ76opqe/export/oas.json', {
+    json: true
   });
 
   for (const typeName of typeNames) {
@@ -132,7 +132,7 @@ const run = async () => {
       throw new Error('Unexpected state.');
     }
 
-    const typeDefinition = resourceResolver(oas);
+    const typeDefinition = resourceResolver(oas.body);
 
     if (!typeDefinition) {
       throw new Error('Unexpected state.');

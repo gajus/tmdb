@@ -24,10 +24,10 @@
     "core-js": "^3.1.4",
     "deep-map-keys": "^2.0.1",
     "es6-error": "^4.1.1",
+    "got": "^9.6.0",
     "lodash": "^4.17.11",
     "qs": "^6.7.0",
-    "roarr": "^2.13.2",
-    "xfetch": "^3.14.3"
+    "roarr": "^2.13.2"
   },
   "description": "TMDb SDK.",
   "devDependencies": {
@@ -47,9 +47,9 @@
     "eslint-config-canonical": "^17.1.1",
     "flow-bin": "^0.102.0",
     "husky": "^3.0.0",
-    "nock": "^10.0.6",
+    "nock": "^11.0.0-beta.20",
     "nyc": "^14.1.1",
-    "semantic-release": "^15.13.18",
+    "semantic-release": "^15.13.19",
     "sinon": "^7.3.2",
     "travis-deploy-once": "^5.0.11"
   },
