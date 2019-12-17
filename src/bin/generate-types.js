@@ -6,7 +6,7 @@
 
 import got from 'got';
 import {
-  camelCase
+  camelCase,
 } from 'lodash';
 
 const typeMap = {
@@ -33,11 +33,11 @@ const typeMap = {
   },
   PersonType: (data) => {
     return data.paths['/person/{person_id}'].get.responses['200'].schema.properties;
-  }
+  },
 };
 
 const definitionMap = {
-  '#/definitions/image-path': 'ImagePathType'
+  '#/definitions/image-path': 'ImagePathType',
 };
 
 const typeNames = Object.keys(typeMap);
@@ -122,7 +122,7 @@ const getPropertyFlowType = (property: Object) => {
 
 const run = async () => {
   const oas = await got('https://api.stoplight.io/v1/versions/9WaNJfGpnnQ76opqe/export/oas.json', {
-    json: true
+    json: true,
   });
 
   for (const typeName of typeNames) {

@@ -5,7 +5,7 @@ import nock from 'nock';
 import Tmdb from '../../src/Tmdb';
 import {
   NotFoundError,
-  RemoteError
+  RemoteError,
 } from '../../src/errors';
 
 test('creates a GET request using apiKey', async (t) => {
@@ -18,8 +18,8 @@ test('creates a GET request using apiKey', async (t) => {
       200,
       {},
       {
-        'x-ratelimit-remaining': 1
-      }
+        'x-ratelimit-remaining': 1,
+      },
     );
 
   await tmdb.get('bar');
@@ -40,8 +40,8 @@ test('retries queries that have failed because of the rate limit', async (t) => 
       {},
       {
         'x-ratelimit-remaining': 0,
-        'x-ratelimit-reset': currentTime
-      }
+        'x-ratelimit-reset': currentTime,
+      },
     );
 
   const scope2 = nock('https://api.themoviedb.org')
@@ -50,8 +50,8 @@ test('retries queries that have failed because of the rate limit', async (t) => 
       200,
       {},
       {
-        'x-ratelimit-remaining': 1
-      }
+        'x-ratelimit-remaining': 1,
+      },
     );
 
   await tmdb.get('bar');
@@ -70,11 +70,11 @@ test('throws NotFoundError if response is 404', async (t) => {
       404,
       {
         status_code: 34,
-        status_message: 'The resource you requested could not be found.'
+        status_message: 'The resource you requested could not be found.',
       },
       {
-        'x-ratelimit-remaining': 1
-      }
+        'x-ratelimit-remaining': 1,
+      },
     );
 
   const error = await t.throwsAsync(tmdb.get('bar'));
@@ -94,11 +94,11 @@ test('throws RemoteError if response is non-200', async (t) => {
       {
         status_code: 7,
         status_message: 'Invalid API key: You must be granted a valid key.',
-        success: false
+        success: false,
       },
       {
-        'x-ratelimit-remaining': 1
-      }
+        'x-ratelimit-remaining': 1,
+      },
     );
 
   const error = await t.throwsAsync(tmdb.get('bar'));

@@ -1,12 +1,12 @@
 // @flow
 
 export {
-  default as Tmdb
+  default as Tmdb,
 } from './Tmdb';
 export {
   NotFoundError,
   RemoteError,
-  TmdbError
+  TmdbError,
 } from './errors';
 export type {
   ImagePathType,
@@ -16,5 +16,5 @@ export type {
   MoviePosterImageType,
   MovieType,
   MovieVideoType,
-  PersonType
+  PersonType,
 } from './types';

@@ -4,7 +4,7 @@
 
 export type ErrorResponseType = {|
   statusCode: number,
-  statusMessage: string
+  statusMessage: string,
 |};
 
 export type ImagePathType = string | null;
@@ -16,7 +16,7 @@ export type MovieBackdropImageType = {|
   +iso6391: null | string,
   +voteAverage: number,
   +voteCount: number,
-  +width: number
+  +width: number,
 |};
 
 export type MovieCastCreditType = {|
@@ -27,7 +27,7 @@ export type MovieCastCreditType = {|
   +id: number,
   +name: string,
   +order: number,
-  +profilePath: ImagePathType
+  +profilePath: ImagePathType,
 |};
 
 export type MovieCrewCreditType = {|
@@ -37,7 +37,7 @@ export type MovieCrewCreditType = {|
   +id: number,
   +job: string,
   +name: string,
-  +profilePath: ImagePathType
+  +profilePath: ImagePathType,
 |};
 
 export type MoviePosterImageType = {|
@@ -47,7 +47,7 @@ export type MoviePosterImageType = {|
   +iso6391: string | null,
   +voteAverage: number,
   +voteCount: number,
-  +width: number
+  +width: number,
 |};
 
 export type MovieType = {|
@@ -57,7 +57,7 @@ export type MovieType = {|
   +budget: number,
   +genres: $ReadOnlyArray<{|
     +id: number,
-    +name: string
+    +name: string,
   |}>,
   +homepage: string | null,
   +id: number,
@@ -69,25 +69,25 @@ export type MovieType = {|
   +posterPath: ImagePathType,
   +productionCompanies: $ReadOnlyArray<{|
     +id: number,
-    +name: string
+    +name: string,
   |}>,
   +productionCountries: $ReadOnlyArray<{|
     +iso31661: string,
-    +name: string
+    +name: string,
   |}>,
   +releaseDate: string,
   +revenue: number,
   +runtime: number | null,
   +spokenLanguages: $ReadOnlyArray<{|
     +iso6391: string,
-    +name: string
+    +name: string,
   |}>,
   +status: string,
   +tagline: string | null,
   +title: string,
   +video: boolean,
   +voteAverage: number,
-  +voteCount: number
+  +voteCount: number,
 |};
 
 export type MovieVideoType = {|
@@ -98,7 +98,7 @@ export type MovieVideoType = {|
   +name: string,
   +site: string,
   +size: number,
-  +type: string
+  +type: string,
 |};
 
 export type PersonType = {|
@@ -114,5 +114,5 @@ export type PersonType = {|
   +name: string,
   +placeOfBirth: string | null,
   +popularity: number,
-  +profilePath: ImagePathType
+  +profilePath: ImagePathType,
 |};

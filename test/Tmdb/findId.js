@@ -5,7 +5,7 @@ import nock from 'nock';
 import Tmdb from '../../src/Tmdb';
 import {
   NotFoundError,
-  UnexpectedResponseError
+  UnexpectedResponseError,
 } from '../../src/errors';
 
 test('finds TMDb movie record ID using IMDb ID', async (t) => {
@@ -19,13 +19,13 @@ test('finds TMDb movie record ID using IMDb ID', async (t) => {
       {
         movie_results: [
           {
-            id: 1
-          }
-        ]
+            id: 1,
+          },
+        ],
       },
       {
-        'x-ratelimit-remaining': 1
-      }
+        'x-ratelimit-remaining': 1,
+      },
     );
 
   const movieId = await tmdb.findId('movie', 'imdb', 'tt1');
@@ -44,11 +44,11 @@ test('throws NotFoundError if resource cannot be found', async (t) => {
     .reply(
       200,
       {
-        movie_results: []
+        movie_results: [],
       },
       {
-        'x-ratelimit-remaining': 1
-      }
+        'x-ratelimit-remaining': 1,
+      },
     );
 
   const error = await t.throwsAsync(tmdb.findId('movie', 'imdb', 'tt1'));
@@ -69,16 +69,16 @@ test('throws UnexpectedResponseError if multiple results are returned', async (t
       {
         movie_results: [
           {
-            id: 1
+            id: 1,
           },
           {
-            id: 2
-          }
-        ]
+            id: 2,
+          },
+        ],
       },
       {
-        'x-ratelimit-remaining': 1
-      }
+        'x-ratelimit-remaining': 1,
+      },
     );
 
   const error = await t.throwsAsync(tmdb.findId('movie', 'imdb', 'tt1'));

@@ -14,11 +14,11 @@ test('retrieves movie resource', async (t) => {
       200,
       {
         id: 1,
-        imdb_id: 'tt1'
+        imdb_id: 'tt1',
       },
       {
-        'x-ratelimit-remaining': 1
-      }
+        'x-ratelimit-remaining': 1,
+      },
     );
 
   const movie = await tmdb.getMovie(1);

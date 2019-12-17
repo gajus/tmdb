@@ -3,17 +3,17 @@
 import got from 'got';
 import deepMapKeys from 'deep-map-keys';
 import {
-  delay
+  delay,
 } from 'bluefeather';
 import {
-  camelCase
+  camelCase,
 } from 'lodash';
 import Logger from './Logger';
 import {
   NotFoundError,
   RemoteError,
   UnexpectedResponseError,
-  Unimplemented
+  Unimplemented,
 } from './errors';
 import type {
   MovieBackdropImageType,
@@ -22,15 +22,16 @@ import type {
   MoviePosterImageType,
   MovieType,
   MovieVideoType,
-  PersonType
+  PersonType,
 } from './types';
 
 type QueryType = {
-  [key: string]: string | number | null
+  [key: string]: string | number | null,
+  ...
 };
 
 const log = Logger.child({
-  namespace: 'Tmdb'
+  namespace: 'Tmdb',
 });
 
 class Tmdb {
@@ -48,13 +49,15 @@ class Tmdb {
     // eslint-disable-next-line no-constant-condition
     while (true) {
       const response = await got('https://api.themoviedb.org/3/' + resource, {
-        json: true,
-        query: {
+        responseType: 'json',
+        searchParams: {
           // eslint-disable-next-line id-match
           api_key: this.apiKey,
-          ...parameters
+
+          // eslint-disable-next-line no-extra-parens, flowtype/no-weak-types
+          ...(parameters: Object),
         },
-        throwHttpErrors: false
+        throwHttpErrors: false,
       });
 
       if (!response.headers['x-ratelimit-remaining']) {
@@ -93,7 +96,7 @@ class Tmdb {
 
   async getMovie (movieId: number): Promise<MovieType> {
     const movie = await this.get('movie/' + movieId, {
-      language: this.language
+      language: this.language,
     });
 
     return movie;
@@ -102,7 +105,7 @@ class Tmdb {
   async getMovieBackdropImages (movieId: number, includeImageLanguage: $ReadOnlyArray<string>): Promise<$ReadOnlyArray<MovieBackdropImageType>> {
     const movie = await this.get('movie/' + movieId + '/images', {
       include_image_language: includeImageLanguage ? includeImageLanguage.join(',') : null,
-      language: this.language
+      language: this.language,
     });
 
     return movie.backdrops;
@@ -110,7 +113,7 @@ class Tmdb {
 
   async getMovieCastCredits (movieId: number): Promise<$ReadOnlyArray<MovieCastCreditType>> {
     const movieCredits = await this.get('movie/' + movieId + '/credits', {
-      language: this.language
+      language: this.language,
     });
 
     return movieCredits.cast;
@@ -118,7 +121,7 @@ class Tmdb {
 
   async getMovieCrewCredits (movieId: number): Promise<$ReadOnlyArray<MovieCrewCreditType>> {
     const movieCredits = await this.get('movie/' + movieId + '/credits', {
-      language: this.language
+      language: this.language,
     });
 
     return movieCredits.crew;
@@ -127,7 +130,7 @@ class Tmdb {
   async getMoviePosterImages (movieId: number, includeImageLanguage: $ReadOnlyArray<string>): Promise<$ReadOnlyArray<MoviePosterImageType>> {
     const movie = await this.get('movie/' + movieId + '/images', {
       include_image_language: includeImageLanguage ? includeImageLanguage.join(',') : null,
-      language: this.language
+      language: this.language,
     });
 
     return movie.posters;
@@ -135,7 +138,7 @@ class Tmdb {
 
   async getMovieVideos (movieId: number): Promise<$ReadOnlyArray<MovieVideoType>> {
     const movie = await this.get('movie/' + movieId + '/videos', {
-      language: this.language
+      language: this.language,
     });
 
     return movie.results;
@@ -143,7 +146,7 @@ class Tmdb {
 
   async getPerson (personId: number): Promise<PersonType> {
     const person = await this.get('person/' + personId, {
-      language: this.language
+      language: this.language,
     });
 
     return person;
@@ -159,7 +162,7 @@ class Tmdb {
     }
 
     const result = await this.get('find/' + externalId, {
-      external_source: externalSource + '_id'
+      external_source: externalSource + '_id',
     });
 
     let results;
