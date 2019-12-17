@@ -9,7 +9,7 @@ script:
   - nyc check-coverage --lines 50
 after_success:
   - NODE_ENV=production npm run build
-  - travis-deploy-once "semantic-release"
+  - semantic-release
 notifications:
   email: false
 sudo: false

@@ -49,8 +49,7 @@
     "nock": "^11.7.0",
     "nyc": "^14.1.1",
     "semantic-release": "^15.13.31",
-    "sinon": "^7.5.0",
-    "travis-deploy-once": "^5.0.11"
+    "sinon": "^7.5.0"
   },
   "engines": {
     "node": ">=10.0"
