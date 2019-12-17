@@ -60,27 +60,25 @@ class Tmdb {
         throwHttpErrors: false,
       });
 
-      if (!response.headers['x-ratelimit-remaining']) {
-        throw new UnexpectedResponseError();
-      }
-
       if (!String(response.statusCode).startsWith('2')) {
-        const rateLimitRemaining = Number(response.headers['x-ratelimit-remaining']);
+        if (response.headers['x-ratelimit-remaining']) {
+          const rateLimitRemaining = Number(response.headers['x-ratelimit-remaining']);
 
-        if (!rateLimitRemaining) {
-          const currentTime = Math.round(new Date().getTime() / 1000);
-          const rateLimitReset = Number(response.headers['x-ratelimit-reset']);
+          if (!rateLimitRemaining) {
+            const currentTime = Math.round(new Date().getTime() / 1000);
+            const rateLimitReset = Number(response.headers['x-ratelimit-reset']);
 
-          // The minimum 30 seconds cooldown ensures that in case 'x-ratelimit-reset'
-          // time is wrong, we don't bombard the TMDb server with requests.
-          const cooldownTime = Math.max(rateLimitReset - currentTime, 30);
+            // The minimum 30 seconds cooldown ensures that in case 'x-ratelimit-reset'
+            // time is wrong, we don't bombard the TMDb server with requests.
+            const cooldownTime = Math.max(rateLimitReset - currentTime, 30);
 
-          log.debug('reached rate limit; waiting %d seconds', cooldownTime);
+            log.debug('reached rate limit; waiting %d seconds', cooldownTime);
 
-          await delay(cooldownTime * 1000);
+            await delay(cooldownTime * 1000);
 
-          // eslint-disable-next-line no-continue
-          continue;
+            // eslint-disable-next-line no-continue
+            continue;
+          }
         }
 
         if (response.statusCode === 404) {
