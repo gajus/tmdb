@@ -24,11 +24,10 @@
     [
       "@babel/preset-env",
       {
-        "corejs": "3",
         "targets": {
-          "node": 8
+          "node": 10
         },
-        "useBuiltIns": "entry"
+        "useBuiltIns": false
       }
     ],
     "@babel/preset-flow"

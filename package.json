@@ -21,7 +21,6 @@
   "dependencies": {
     "@babel/register": "^7.7.4",
     "bluefeather": "^2.9.0",
-    "core-js": "^3.5.0",
     "deep-map-keys": "^2.0.1",
     "es6-error": "^4.1.1",
     "got": "^10.0.4",
@@ -54,7 +53,7 @@
     "travis-deploy-once": "^5.0.11"
   },
   "engines": {
-    "node": ">=8.0"
+    "node": ">=10.0"
   },
   "keywords": [
     "tmdb"
