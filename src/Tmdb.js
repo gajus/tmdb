@@ -97,7 +97,15 @@ class Tmdb {
       language: this.language,
     });
 
-    return movie;
+    return {
+      ...movie,
+
+      // Revenue can be 0, e.g. https://gist.github.com/gajus/b396a7e1af22977b0d98f4c63a664d44#file-response-json-L94
+      revenue: movie.revenue || null,
+
+      // Runtime can be 0, e.g. https://gist.github.com/gajus/b396a7e1af22977b0d98f4c63a664d44#file-response-json-L95
+      runtime: movie.runtime || null,
+    };
   }
 
   async getMovieBackdropImages (movieId: number, includeImageLanguage: $ReadOnlyArray<string>): Promise<$ReadOnlyArray<MovieBackdropImageType>> {
