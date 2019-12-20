@@ -59,7 +59,7 @@ Example: `GET /search/movie` API method is not implemented. However, you can sti
 
 ```js
 await tmdb.get('search/movie', {
-  query: 'The Terminator,
+  query: 'The Terminator',
 });
 
 ```
