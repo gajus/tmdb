@@ -35,8 +35,34 @@ const tmdb = new Tmdb(apiKey);
 Refer to the [source code](./src/Tmdb.js) and the [type definitions](./src/types.js).
 
 > Note: Only a subset of the API is implemented. I will be adding new methods as needed.
-> If you need a method added, raise a PR. Alternatively, you can use the low-level `get`
+> If you need a method added, raise a PR. Alternatively, you can use the low-level [`get`](#get)
 > method to construct any API calls.
+
+```js
+async findId (resourceType: 'movie' | 'person', externalSource: 'imdb', externalId: string) => Promise<number>;
+async get (resource: string, parameters: QueryType = {}) => Object;
+async getMovie (movieId: number) => Promise<MovieType>
+async getMovieBackdropImages (movieId: number, includeImageLanguage: $ReadOnlyArray<string>) => Promise<$ReadOnlyArray<MovieBackdropImageType>>;
+async getMovieCastCredits (movieId: number) => Promise<$ReadOnlyArray<MovieCastCreditType>>;
+async getMovieCrewCredits (movieId: number) => Promise<$ReadOnlyArray<MovieCrewCreditType>>;
+async getMoviePosterImages (movieId: number, includeImageLanguage: $ReadOnlyArray<string>) => Promise<$ReadOnlyArray<MoviePosterImageType>>;
+async getMovieVideos (movieId: number) => Promise<$ReadOnlyArray<MovieVideoType>>;
+async getPerson (personId: number) => Promise<PersonType>;
+
+```
+
+#### `get`
+
+`get` method is the most primitive TMDb API method and it can be used to construct any of the API queries.
+
+Example: `GET /search/movie` API method is not implemented. However, you can still use it as:
+
+```js
+await tmdb.get('search/movie', {
+  query: 'The Terminator,
+});
+
+```
 
 ### Handling errors
 
