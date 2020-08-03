@@ -34,6 +34,9 @@ const typeMap = {
   PersonType: (data) => {
     return data.paths['/person/{person_id}'].get.responses['200'].schema.properties;
   },
+  CompanyType: (data) => {
+    return data.paths['/company/{company_id}'].get.responses['200'].schema.properties;
+  },
 };
 
 const definitionMap = {
