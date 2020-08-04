@@ -10,6 +10,9 @@ import {
 } from 'lodash';
 
 const typeMap = {
+  CompanyType: (data) => {
+    return data.paths['/company/{company_id}'].get.responses['200'].schema.properties;
+  },
   ImagePathType: (data) => {
     return data.definitions['image-path'].type;
   },
@@ -121,9 +124,7 @@ const getPropertyFlowType = (property: Object) => {
 };
 
 const run = async () => {
-  const oas = await got('https://api.stoplight.io/v1/versions/9WaNJfGpnnQ76opqe/export/oas.json', {
-    json: true,
-  });
+  const oas = await got('https://api.stoplight.io/v1/versions/9WaNJfGpnnQ76opqe/export/oas.json').json();
 
   for (const typeName of typeNames) {
     const resourceResolver = typeMap[typeName];
@@ -132,7 +133,7 @@ const run = async () => {
       throw new Error('Unexpected state.');
     }
 
-    const typeDefinition = resourceResolver(oas.body);
+    const typeDefinition = resourceResolver(oas);
 
     if (!typeDefinition) {
       throw new Error('Unexpected state.');

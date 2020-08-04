@@ -23,6 +23,7 @@ import type {
   MovieType,
   MovieVideoType,
   PersonType,
+  CompanyType,
 } from './types';
 
 type QueryType = {
@@ -156,6 +157,14 @@ class Tmdb {
     });
 
     return person;
+  }
+
+  async getCompany (companyId: number): Promise<CompanyType> {
+    const company = await this.get('company/' + companyId, {
+      language: this.language,
+    });
+
+    return company;
   }
 
   async findId (resourceType: 'movie' | 'person', externalSource: 'imdb', externalId: string): Promise<number> {

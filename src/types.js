@@ -116,3 +116,14 @@ export type PersonType = {|
   +popularity: number,
   +profilePath: ImagePathType,
 |};
+
+export type CompanyType = {|
+  +description: string,
+  +headquarters: string,
+  +homepage: string,
+  +id: number,
+  +logoPath: string,
+  +name: string,
+  +originCountry: string,
+  +parentCompany: null | CompanyType,
+|};
