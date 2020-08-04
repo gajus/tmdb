@@ -162,7 +162,7 @@ class Tmdb {
   async getCompany (companyId: number): Promise<CompanyType> {
     const company = await this.get('company/' + companyId, {
       language: this.language,
-    })
+    });
 
     return company;
   }

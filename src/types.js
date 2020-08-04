@@ -125,5 +125,5 @@ export type CompanyType = {|
   +logoPath: string,
   +name: string,
   +originCountry: string,
-  +parentCompany: null | CompanyType
+  +parentCompany: null | CompanyType,
 |};
