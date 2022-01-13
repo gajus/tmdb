@@ -1,0 +1,47 @@
+name: CI Job
+
+on:
+  pull_request:
+    types: [synchronize, opened, reopened]
+  push:
+    # branches to consider in the event; optional, defaults to all
+    branches:
+      - master
+jobs:
+  eslint_linter_job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - run: npm i
+      - run: npm run lint
+  # prettier_linter_job:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 14
+  #     - run: npm i
+  #     - run: npm run prettier
+  pr_job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - run: npm i
+      - run: npm t
+      - run: npx nyc@latest --silent npm run test
+      # - run: npx nyc@latest report --reporter=text-lcov | npx coveralls
+      # - run: npx nyc@latest check-coverage --lines 50
+  automerge:
+    runs-on: ubuntu-latest
+    needs: [eslint_linter_job, pr_job]
+    steps:
+      - uses: fastify/github-action-merge-dependabot@v2.1.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}

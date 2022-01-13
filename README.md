@@ -11,23 +11,20 @@
 
 ## Features
 
-* Automatic rate-throttling
-* Strict types
+- Automatic rate-throttling
+- Strict types
 
 ## Usage
 
 ```js
-import {
-  Tmdb
-} from 'tmdb';
+import { Tmdb } from "tmdb";
 
 /**
  * @see https://developers.themoviedb.org/3/getting-started/authentication
  */
-const apiKey: string = '';
+const apiKey: string = "";
 
 const tmdb = new Tmdb(apiKey);
-
 ```
 
 ### API
@@ -58,10 +55,9 @@ async getPerson (personId: number) => Promise<PersonType>;
 Example: `GET /search/movie` API method is not implemented. However, you can still use it as:
 
 ```js
-await tmdb.get('search/movie', {
-  query: 'The Terminator',
+await tmdb.get("search/movie", {
+  query: "The Terminator",
 });
-
 ```
 
 ### Handling errors
@@ -95,3 +91,7 @@ This package is using [`roarr`](https://www.npmjs.com/package/roarr) logger to l
 Export `ROARR_LOG=true` environment variable to enable log printing to stdout.
 
 Use [`roarr-cli`](https://github.com/gajus/roarr-cli) program to pretty-print the logs.
+
+## Additional Helpful Info
+
+if you are on Windows and having trouble with running the tests, checkout this [thread](https://stackoverflow.com/questions/11928013/node-env-is-not-recognized-as-an-internal-or-external-command-operable-comman)
