@@ -17,7 +17,7 @@
 ## Usage
 
 ```js
-import { Tmdb } from "tmdb";
+import { Tmdb } from "@dills1220/tmdb";
 
 /**
  * @see https://developers.themoviedb.org/3/getting-started/authentication
@@ -68,7 +68,7 @@ Methods that are expected to return a specific resource will throw `NotFoundErro
 import {
   Tmdb,
   NotFoundError
-} from 'tmdb';
+} from "@dills1220/tmdb";
 
 const tmdb = new Tmdb([..]);
 
